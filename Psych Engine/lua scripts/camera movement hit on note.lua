@@ -13,7 +13,7 @@ local camOriginB = {0,0}
 local camOriginG = {0,0}
 
 function onMoveCamera(target)
-    if settings.enable then
+    if settings.enable and not getProperty('isCameraOnForcedPos') then
         if target == "dad" then
             camOriginD = {runHaxeCode([[game.dad.getMidpoint().x]]) + 150, runHaxeCode([[game.dad.getMidpoint().y]]) - 100}
             camOriginD[1] = camOriginD[1] - runHaxeCode([[ game.dad.cameraPosition[0] ]]) - runHaxeCode([[ game.dad.cameraPosition[1] ]])
@@ -39,7 +39,7 @@ function onMoveCamera(target)
 end
 
 function opponentNoteHit(id, noteData, noteType, isSustainNote)
-    if settings.enable then
+    if settings.enable and not getProperty('isCameraOnForcedPos') then
         if not gfSection then
             if noteData == 0 then
                 setProperty('camFollow.x', camOriginD[1] - settings.dad)
@@ -79,7 +79,7 @@ function opponentNoteHit(id, noteData, noteType, isSustainNote)
 end
 
 function goodNoteHit(id, noteData, noteType, isSustainNote)
-    if settings.enable then
+    if settings.enable and not getProperty('isCameraOnForcedPos') then
         if not gfSection then
             if noteData == 0 then
                 setProperty('camFollow.x', camOriginB[1] - settings.boyfriend)
@@ -119,7 +119,7 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
 end
 
 function onBeatHit()
-    if settings.enable then
+    if settings.enable and not getProperty('isCameraOnForcedPos') then
         for i = 0,getProperty('settings.idleAnims.lenght') do
             if not mustHitSection and getProperty('dad.animation.curAnim.name.startsWith') ~= settings.idleAnims[i] then
                 --setProperty('cameraSpeed', settings.moveSpeed) scrapped
