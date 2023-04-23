@@ -4,7 +4,7 @@ local settings = {
     dad = 40, --// intensity for dad camera, default to 40
     boyfriend = 40, --// intensity for bf camera, default to 40
     gf = 40, --// intensity for gf camera, default to 40
-    idleAnims = {'idle', 'danceLeft', 'danceRight', 'hey'} --// what to reset the camera value
+    idleAnims = {'idle', 'danceLeft', 'danceRight', 'hey'} --// what to reset the camera value, default to {'idle', 'danceLeft', 'danceRight', 'hey'}
 }
 
 --// don't edit this if you don't know what your doing.
@@ -121,19 +121,24 @@ end
 function onBeatHit()
     if settings.enable then
         for i = 0,getProperty('settings.idleAnims.lenght') do
-            if not mustHitSection and getProperty('dad.animation.curAnim.name.startsWith') == settings.idleAnims[i] then
+            if not mustHitSection and getProperty('dad.animation.curAnim.name.startsWith') ~= settings.idleAnims[i] then
+                --setProperty('cameraSpeed', settings.moveSpeed) scrapped
+            elseif not mustHitSection and getProperty('dad.animation.curAnim.name.startsWith') == settings.idleAnims[i] then
+                --setProperty('cameraSpeed', settings.idleSpeed) scrapped
                 setProperty('camFollow.x', camOriginD[1])
                 setProperty('camFollow.y', camOriginD[2])
             end
-        end
-        for i = 0,getProperty('settings.idleAnims.lenght') do
-            if mustHitSection and getProperty('boyfriend.animation.curAnim.name.startsWith') == settings.idleAnims[i] then
+            if mustHitSection and getProperty('boyfriend.animation.curAnim.name.startsWith') ~= settings.idleAnims[i] then
+                setProperty('cameraSpeed', settings.moveSpeed)
+            elseif mustHitSection and getProperty('boyfriend.animation.curAnim.name.startsWith') == settings.idleAnims[i] then
+                --setProperty('cameraSpeed', settings.idleSpeed) scrapped
                 setProperty('camFollow.x', camOriginB[1])
                 setProperty('camFollow.y', camOriginB[2])
             end
-        end
-        for i = 0,getProperty('settings.idleAnims.lenght') do
-            if gfSection and getProperty('gf.animation.curAnim.name.startsWith') == settings.idleAnims[i] then
+            if gfSection and getProperty('gf.animation.curAnim.name.startsWith') ~= settings.idleAnims[i] then
+                --setProperty('cameraSpeed', settings.moveSpeed) scrapped
+            elseif gfSection and getProperty('gf.animation.curAnim.name.startsWith') == settings.idleAnims[i] then
+                --setProperty('cameraSpeed', settings.idleSpeed) scrapped
                 setProperty('camFollow.x', camOriginG[1])
                 setProperty('camFollow.y', camOriginG[2])
             end
